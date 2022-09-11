@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include <kmc_runner.h>
 #include <iostream>
+#include <algorithm>
 
 KMCGUI::KMCGUI(QWidget *parent)
     : QMainWindow(parent)
@@ -24,34 +25,48 @@ void KMCGUI::on_pushButton_2_clicked()
 
 void KMCGUI::on_pushButton_clicked()
 {
-    try
+    if (fileNames.count() == 0)
     {
-        KMC::Runner runner;
+        ui.label_4->setText("No files choosed");
+    }
+    else 
+    {
+        std::vector<std::string> stringFileNames; 
+        for (int i = 0; i < fileNames.size(); i++)
+        {
+            std::string fileName = fileNames[i].toLocal8Bit().constData();
+            std::replace(fileName.begin(), fileName.end(), '/', '\\');
+            stringFileNames.push_back(fileName);
+        }
+        try
+        {
+            KMC::Runner runner;
 
-        KMC::Stage1Params stage1Params;
-        stage1Params
-            .SetKmerLen(3)
-            .SetInputFiles({ "C:\\Users\\match\\Desktop\\test1.fq"});
+            KMC::Stage1Params stage1Params;
+            stage1Params
+                .SetKmerLen(3)
+                .SetInputFiles(stringFileNames);
 
-        auto stage1Result = runner.RunStage1(stage1Params);
+            auto stage1Result = runner.RunStage1(stage1Params);
 
-        KMC::Stage2Params stage2Params;
+            KMC::Stage2Params stage2Params;
 
-        stage2Params
-            .SetOutputFileName("31mers");
+            stage2Params
+                .SetOutputFileName("31mers");
 
-        auto stage2Result = runner.RunStage2(stage2Params);
+            auto stage2Result = runner.RunStage2(stage2Params);
         
 
-        std::string totalKmers = std::to_string(stage2Result.nTotalKmers);
-        std::string uniqueKmers = std::to_string(stage2Result.nUniqueKmers);
+            std::string totalKmers = std::to_string(stage2Result.nTotalKmers);
+            std::string uniqueKmers = std::to_string(stage2Result.nUniqueKmers);
 
-        ui.label_4->setText(QString::fromUtf8(totalKmers.c_str()));
-        ui.label_5->setText(QString::fromUtf8(uniqueKmers.c_str()));
+            ui.label_4->setText(QString::fromUtf8(totalKmers.c_str()));
+            ui.label_5->setText(QString::fromUtf8(uniqueKmers.c_str()));
 
-    }
-    catch (const std::exception& e)
-    {
-        ui.label->setText(QString::fromUtf8(e.what()));
+        }
+        catch (const std::exception& e)
+        {
+            ui.label->setText(QString::fromUtf8(e.what()));
+        }
     }
 }
