@@ -54,7 +54,7 @@ void KMCGUI::on_pushButton_clicked()
 
             KMC::Stage1Params stage1Params;
             stage1Params
-                .SetKmerLen(3)
+                .SetKmerLen(ui.horizontalSlider->value())
                 .SetInputFiles(stringFileNames);
 
             auto stage1Result = runner.RunStage1(stage1Params);
