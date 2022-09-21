@@ -8,12 +8,22 @@ KMCGUI::KMCGUI(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+    ui.horizontalSlider->setMinimum(1);
+    ui.horizontalSlider->setMaximum(100);
+    ui.horizontalSlider->setValue(1);
     connect(ui.chooseButton, SIGNAL(clicked()), this, SLOT(on_pushButton_2_clicked()));
     connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(on_pushButton_clicked()));
+    connect(ui.horizontalSlider, SIGNAL(ui.horizontalSlider->valueChanged()), this,
+        SLOT(on_horizontalSlider_valueChanged()()));
 }
 
 KMCGUI::~KMCGUI()
 {}
+
+void KMCGUI::on_horizontalSlider_valueChanged()
+{
+    ui.label_10->setText(QString::number(ui.horizontalSlider->value()));
+}
 
 void KMCGUI::on_pushButton_2_clicked()
 {
