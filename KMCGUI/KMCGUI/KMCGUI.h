@@ -14,7 +14,10 @@ public:
 public slots:
     void on_pushButton_2_clicked();
     void on_pushButton_clicked();
-
+    void on_horizontalSlider_valueChanged();
+    void on_horizontalSlider_2_valueChanged();
+    void on_horizontalSlider_3_valueChanged();
+    void on_horizontalSlider_4_valueChanged();
 private:
     Ui::KMCGUIClass ui;
     QStringList fileNames; 
