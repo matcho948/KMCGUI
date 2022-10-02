@@ -12,12 +12,12 @@ public:
     ~KMCGUI();
 
 public slots:
-    void on_pushButton_2_clicked();
-    void on_pushButton_clicked();
-    void on_horizontalSlider_valueChanged();
-    void on_horizontalSlider_2_valueChanged();
-    void on_horizontalSlider_3_valueChanged();
-    void on_horizontalSlider_4_valueChanged();
+    void on_chooseButton_clicked();
+    void on_runButton_clicked();
+    void on_kmerLengthSlider_valueChanged();
+    void on_threadsSlider_valueChanged();
+    void on_GBSlider_valueChanged();
+    void on_signatureLengthSlider_valueChanged();
 private:
     Ui::KMCGUIClass ui;
     QStringList fileNames; 
