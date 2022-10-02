@@ -161,7 +161,7 @@ border-radius: 20px;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider">
+   <widget class="QSlider" name="kmerLengthSlider">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -321,7 +321,7 @@ border-radius: 20px;</string>
      <string>1</string>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_2">
+   <widget class="QSlider" name="threadsSlider">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -376,7 +376,7 @@ border-radius: 20px;</string>
      <string>Max GB</string>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_3">
+   <widget class="QSlider" name="GBSlider">
     <property name="geometry">
      <rect>
       <x>30</x>

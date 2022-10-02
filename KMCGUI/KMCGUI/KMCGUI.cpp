@@ -8,13 +8,13 @@ KMCGUI::KMCGUI(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
-    ui.horizontalSlider->setMinimum(1);
-    ui.horizontalSlider->setMaximum(100);
-    ui.horizontalSlider->setValue(1);
-    ui.horizontalSlider_2->setMinimum(1);
-    ui.horizontalSlider_2->setMaximum(64);
-    ui.horizontalSlider_2->setValue(std::thread::hardware_concurrency());
-    ui.horizontalSlider_3->setMinimum(1);
+    ui.kmerLengthSlider->setMinimum(1);
+    ui.kmerLengthSlider->setMaximum(100);
+    ui.kmerLengthSlider->setValue(1);
+    ui.threadsSlider->setMinimum(1);
+    ui.threadsSlider->setMaximum(64);
+    ui.threadsSlider->setValue(std::thread::hardware_concurrency());
+    ui.->setMinimum(1);
     ui.horizontalSlider_3->setMaximum(128);
     ui.horizontalSlider_3->setValue(12);
     ui.horizontalSlider_4->setMinimum(5);
@@ -23,27 +23,27 @@ KMCGUI::KMCGUI(QWidget *parent)
     ui.checkBox_2->setChecked(1);
     connect(ui.chooseButton, SIGNAL(clicked()), this, SLOT(on_pushButton_2_clicked()));
     connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(on_pushButton_clicked()));
-    connect(ui.horizontalSlider, SIGNAL(ui.horizontalSlider->valueChanged()), this,
+    connect(ui.kmerLengthSlider, SIGNAL(ui.horizontalSlider->valueChanged()), this,
         SLOT(on_horizontalSlider_valueChanged()()));
-    connect(ui.horizontalSlider, SIGNAL(ui.horizontalSlider_2->valueChanged()), this,
-        SLOT(on_horizontalSlider_2_valueChanged()()));
-    connect(ui.horizontalSlider, SIGNAL(ui.horizontalSlider_3->valueChanged()), this,
+    connect(ui.threadsSlider, SIGNAL(ui.threadsSlider->valueChanged()), this,
+        SLOT(on_threadsSlider_valueChanged()()));
+    connect(ui.kmerLengthSlider, SIGNAL(ui.horizontalSlider_3->valueChanged()), this,
         SLOT(on_horizontalSlider_3_valueChanged()()));
-    connect(ui.horizontalSlider, SIGNAL(ui.horizontalSlider_4->valueChanged()), this,
+    connect(ui.kmerLengthSlider, SIGNAL(ui.horizontalSlider_4->valueChanged()), this,
         SLOT(on_horizontalSlider_4_valueChanged()()));
 }
 
 KMCGUI::~KMCGUI()
 {}
 
-void KMCGUI::on_horizontalSlider_valueChanged()
+void KMCGUI::on_kmerLengthSlider_valueChanged()
 {
-    ui.label_10->setText(QString::number(ui.horizontalSlider->value()));
+    ui.label_10->setText(QString::number(ui.kmerLengthSlider->value()));
 }
 
-void KMCGUI::on_horizontalSlider_2_valueChanged()
+void KMCGUI::on_threadsSlider_valueChanged()
 {
-    ui.label_12->setText(QString::number(ui.horizontalSlider_2->value()));
+    ui.label_12->setText(QString::number(ui.threadsSlider->value()));
 }
 
 void KMCGUI::on_horizontalSlider_3_valueChanged()
@@ -85,8 +85,8 @@ void KMCGUI::on_pushButton_clicked()
 
             KMC::Stage1Params stage1Params;
             stage1Params
-                .SetKmerLen(ui.horizontalSlider->value())
-                .SetNThreads(ui.horizontalSlider_2->value())
+                .SetKmerLen(ui.kmerLengthSlider->value())
+                .SetNThreads(ui.threadsSlider->value())
                 .SetMaxRamGB(ui.horizontalSlider_3->value())
                 .SetSignatureLen(ui.horizontalSlider_4->value())
                 .SetHomopolymerCompressed(ui.checkBox->isChecked())
