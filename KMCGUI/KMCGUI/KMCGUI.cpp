@@ -3,24 +3,15 @@
 #include <kmc_runner.h>
 #include <iostream>
 #include <algorithm>
+#include "configuration.h"
 
 KMCGUI::KMCGUI(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
-    ui.kmerLengthSlider->setMinimum(1);
-    ui.kmerLengthSlider->setMaximum(100);
-    ui.kmerLengthSlider->setValue(1);
-    ui.threadsSlider->setMinimum(1);
-    ui.threadsSlider->setMaximum(64);
-    ui.threadsSlider->setValue(std::thread::hardware_concurrency());
-    ui.GBSlider->setMinimum(1);
-    ui.GBSlider->setMaximum(128);
-    ui.GBSlider->setValue(12);
-    ui.signatureLengthSlider->setMinimum(5);
-    ui.signatureLengthSlider->setMaximum(11);
-    ui.signatureLengthSlider->setValue(9);
-    ui.canoncialKmersCheckBox->setChecked(1);
+    configureSliders(ui);
+    configureCheckboxes(ui);
+
     connect(ui.chooseButton, SIGNAL(clicked()), this, SLOT(on_chooseButton_clicked()));
     connect(ui.runButton, SIGNAL(clicked()), this, SLOT(on_runButton_clicked()));
     connect(ui.kmerLengthSlider, SIGNAL(ui.horizontalSlider->valueChanged()), this,

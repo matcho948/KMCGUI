@@ -21,6 +21,12 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="Configuration">
+      <UniqueIdentifier>{76ccf31f-0d17-4e6c-9236-a9b6b5ccd4f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actions">
+      <UniqueIdentifier>{c991775f-030b-482e-ac4f-b08e66870ed9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="KMCGUI.qrc">
@@ -40,5 +46,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="configuration.cpp">
+      <Filter>Configuration</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="configuration.h">
+      <Filter>Configuration</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
