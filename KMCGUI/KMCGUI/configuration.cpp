@@ -10,7 +10,7 @@ void configureSliders(Ui::KMCGUIClass ui)
     ui.threadsSlider->setMinimum(1);
     ui.threadsSlider->setMaximum(64);
     ui.threadsSlider->setValue(std::thread::hardware_concurrency());
-    ui.GBSlider->setMinimum(1);
+    ui.GBSlider->setMinimum(2);
     ui.GBSlider->setMaximum(128);
     ui.GBSlider->setValue(12);
     ui.signatureLengthSlider->setMinimum(5);
