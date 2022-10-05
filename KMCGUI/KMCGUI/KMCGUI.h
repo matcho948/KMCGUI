@@ -18,6 +18,9 @@ public slots:
     void on_threadsSlider_valueChanged();
     void on_GBSlider_valueChanged();
     void on_signatureLengthSlider_valueChanged();
+    void on_nBinsSlider_valueChanged();
+    void on_threadsSliderStage2_valueChanged();
+    void on_GBSliderStage2_valueChanged();
 private:
     Ui::KMCGUIClass ui;
     QStringList fileNames; 

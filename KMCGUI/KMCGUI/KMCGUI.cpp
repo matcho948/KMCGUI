@@ -22,6 +22,8 @@ KMCGUI::KMCGUI(QWidget *parent)
         SLOT(on_GBSlider_valueChanged()()));
     connect(ui.signatureLengthSlider, SIGNAL(ui.signatureLengthSlider->valueChanged()), this,
         SLOT(on_signatureLengthSlider_valueChanged()()));
+    connect(ui.nBinsSlider, SIGNAL(ui.nBinsSlider->valueChanged()), this,
+        SLOT(on_nBinsSlider_valueChanged()()));
 }
 
 KMCGUI::~KMCGUI()
@@ -45,6 +47,22 @@ void KMCGUI::on_GBSlider_valueChanged()
 void KMCGUI::on_signatureLengthSlider_valueChanged()
 {
     ui.signatureLengthValue->setText(QString::number(ui.signatureLengthSlider->value()));
+}
+
+void KMCGUI::on_nBinsSlider_valueChanged()
+{
+    ui.nBinsValue->setText(QString::number(ui.nBinsSlider->value()));
+}
+
+void KMCGUI::on_threadsSliderStage2_valueChanged()
+{
+    ui.threadsValueStage2->setText(QString::number(ui.threadsSliderStage2->value()));
+
+}
+
+void KMCGUI::on_GBSliderStage2_valueChanged()
+{
+    ui.maxGBValueStage2->setText(QString::number(ui.GBSliderStage2->value()));
 }
 
 void KMCGUI::on_chooseButton_clicked()
@@ -87,6 +105,7 @@ void KMCGUI::on_runButton_clicked()
                 .SetHomopolymerCompressed(ui.homopomylerCompressionCheckBox->isChecked())
                 .SetCanonicalKmers(ui.canoncialKmersCheckBox->isChecked())
                 .SetRamOnlyMode(ui.ramModeCheckBox->isChecked())
+                .SetNBins(ui.nBinsSlider->value())
                 .SetInputFiles(stringFileNames);
 
             auto stage1Result = runner.RunStage1(stage1Params);
@@ -94,6 +113,8 @@ void KMCGUI::on_runButton_clicked()
             KMC::Stage2Params stage2Params;
 
             stage2Params
+                .SetNThreads(ui.threadsSliderStage2->value())
+                .SetMaxRamGB(ui.GBSliderStage2->value())
                 .SetOutputFileName("31mers");
 
             auto stage2Result = runner.RunStage2(stage2Params);
