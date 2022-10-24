@@ -70,7 +70,7 @@ void KMCGUI::on_chooseButton_clicked()
     QFileDialog* fileDialog = new QFileDialog();
     fileNames = fileDialog->getOpenFileNames(this, tr("Open Files"),
         "",
-        tr("Fasta files (*.fq *.fastq)"));
+        tr("Fastq file (*.fastq);;Fq file (*.fq);;Fasta file (*.fasta);;Fa file (*.fa);;Compressed Fastq file (*.fastq.gz);;Compressed Fq file (*.fq.gz);;Compressed Fasta file (*.fasta.gz);;Compressed fa file (*.fa.gz);;Fm file (*.fm);;Compressed fm file (*.fm.gz)"));
 }
 
 void KMCGUI::on_runButton_clicked()
