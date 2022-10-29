@@ -5,6 +5,9 @@
 #include <algorithm>
 #include "configuration.h"
 
+KMC::Runner runner;
+KMC::Stage1Params stage1Params;
+
 KMCGUI::KMCGUI(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -12,8 +15,9 @@ KMCGUI::KMCGUI(QWidget *parent)
     configureSliders(ui);
     configureCheckboxes(ui);
 
-    connect(ui.chooseButton, SIGNAL(clicked()), this, SLOT(on_chooseButton_clicked()));
-    connect(ui.runButton, SIGNAL(clicked()), this, SLOT(on_runButton_clicked()));
+    //connect(ui.chooseButton, SIGNAL(clicked()), this, SLOT(on_chooseButton_clicked()));
+    //connect(ui.runButton, SIGNAL(clicked()), this, SLOT(on_runButton_clicked()));
+    connect(ui.runButton, SIGNAL(clicked()), this, SLOT(on_runButton_progressBar()));
     connect(ui.kmerLengthSlider, SIGNAL(ui.horizontalSlider->valueChanged()), this,
         SLOT(on_horizontalSlider_valueChanged()()));
     connect(ui.threadsSlider, SIGNAL(ui.threadsSlider->valueChanged()), this,
@@ -71,6 +75,11 @@ void KMCGUI::on_chooseButton_clicked()
     fileNames = fileDialog->getOpenFileNames(this, tr("Open Files"),
         "",
         tr("Fastq file (*.fastq);;Fq file (*.fq);;Fasta file (*.fasta);;Fa file (*.fa);;Compressed Fastq file (*.fastq.gz);;Compressed Fq file (*.fq.gz);;Compressed Fasta file (*.fasta.gz);;Compressed fa file (*.fa.gz);;Fm file (*.fm);;Compressed fm file (*.fm.gz)"));
+    ui.choosenFileLabel->setText(fileNames[0]);
+}
+
+void KMCGUI::on_runButton_progressBar()
+{
 }
 
 void KMCGUI::on_runButton_clicked()
@@ -94,9 +103,6 @@ void KMCGUI::on_runButton_clicked()
         }
         try
         {
-            KMC::Runner runner;
-
-            KMC::Stage1Params stage1Params;
             stage1Params
                 .SetKmerLen(ui.kmerLengthSlider->value())
                 .SetNThreads(ui.threadsSlider->value())
