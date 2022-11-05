@@ -4,6 +4,8 @@
 #include <iostream>
 #include <algorithm>
 #include "configuration.h"
+#include "ProgressObserver.h"
+#include "ProgressObserver.h"
 
 KMC::Runner runner;
 KMC::Stage1Params stage1Params;
@@ -14,10 +16,10 @@ KMCGUI::KMCGUI(QWidget *parent)
     ui.setupUi(this);
     configureSliders(ui);
     configureCheckboxes(ui);
+    ui.progressValue->setText("0 %");
 
     //connect(ui.chooseButton, SIGNAL(clicked()), this, SLOT(on_chooseButton_clicked()));
     //connect(ui.runButton, SIGNAL(clicked()), this, SLOT(on_runButton_clicked()));
-    connect(ui.runButton, SIGNAL(clicked()), this, SLOT(on_runButton_progressBar()));
     connect(ui.kmerLengthSlider, SIGNAL(ui.horizontalSlider->valueChanged()), this,
         SLOT(on_horizontalSlider_valueChanged()()));
     connect(ui.threadsSlider, SIGNAL(ui.threadsSlider->valueChanged()), this,
@@ -78,12 +80,10 @@ void KMCGUI::on_chooseButton_clicked()
     ui.choosenFileLabel->setText(fileNames[0]);
 }
 
-void KMCGUI::on_runButton_progressBar()
-{
-}
-
 void KMCGUI::on_runButton_clicked()
 {
+    ProgressObserver* progressObserver = new ProgressObserver(&ui);
+
     ui.errorMessageBox->setText("");
     ui.totalKmersValue->setText("Wait for result...");
     ui.totalUniqueKmersValue->setText("Wait for result...");
@@ -112,7 +112,8 @@ void KMCGUI::on_runButton_clicked()
                 .SetCanonicalKmers(ui.canoncialKmersCheckBox->isChecked())
                 .SetRamOnlyMode(ui.ramModeCheckBox->isChecked())
                 .SetNBins(ui.nBinsSlider->value())
-                .SetInputFiles(stringFileNames);
+                .SetInputFiles(stringFileNames)
+                .SetPercentProgressObserver(progressObserver);
 
             auto stage1Result = runner.RunStage1(stage1Params);
 

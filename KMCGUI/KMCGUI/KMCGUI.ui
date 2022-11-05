@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>826</width>
+    <width>837</width>
     <height>647</height>
    </rect>
   </property>
@@ -986,7 +986,7 @@ border-radius: 20px;</string>
      <rect>
       <x>340</x>
       <y>490</y>
-      <width>281</width>
+      <width>441</width>
       <height>20</height>
      </rect>
     </property>
@@ -1007,7 +1007,7 @@ border-radius: 20px;</string>
      <rect>
       <x>600</x>
       <y>190</y>
-      <width>131</width>
+      <width>181</width>
       <height>31</height>
      </rect>
     </property>
@@ -1017,20 +1017,25 @@ border-radius: 20px;</string>
      </font>
     </property>
     <property name="text">
-     <string>Progress bar</string>
+     <string>Progress status</string>
     </property>
    </widget>
-   <widget class="QLabel" name="progressBarValue">
+   <widget class="QLabel" name="progressValue">
     <property name="geometry">
      <rect>
       <x>600</x>
-      <y>240</y>
-      <width>81</width>
-      <height>16</height>
+      <y>230</y>
+      <width>111</width>
+      <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
   </widget>
@@ -1039,7 +1044,7 @@ border-radius: 20px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>826</width>
+     <width>837</width>
      <height>22</height>
     </rect>
    </property>
