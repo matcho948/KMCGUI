@@ -2,15 +2,18 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_KMCGUI.h"
+#include <kmc_runner.h>
 
-class KMCGUI : public QMainWindow
+
+class KMCGUI : public QMainWindow, public KMC::IPercentProgressObserver
 {
     Q_OBJECT
 
 public:
     KMCGUI(QWidget *parent = nullptr);
     ~KMCGUI();
-
+    void SetLabel(const std::string& label) override;
+    void ProgressChanged(int newValue) override;
 public slots:
     void on_chooseButton_clicked();
     void on_runButton_clicked();
@@ -21,7 +24,11 @@ public slots:
     void on_nBinsSlider_valueChanged();
     void on_threadsSliderStage2_valueChanged();
     void on_GBSliderStage2_valueChanged();
-private:
+signals:
+    void computationProgress(int progress);
+    void repaintProgressBar();
+private:	
+    std::string label;
     Ui::KMCGUIClass ui;
     QStringList fileNames; 
 };

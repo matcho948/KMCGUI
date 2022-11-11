@@ -4,11 +4,26 @@
 #include <iostream>
 #include <algorithm>
 #include "configuration.h"
-#include "ProgressObserver.h"
-#include "ProgressObserver.h"
+#include <chrono>
+#include <thread>
+#include <mutex>
+#include <QFutureWatcher>
+#include <QtConcurrent/QtConcurrent>
 
 KMC::Runner runner;
 KMC::Stage1Params stage1Params;
+
+void KMCGUI::SetLabel(const std::string& label)
+{
+    this->label = label;
+}
+
+void KMCGUI::ProgressChanged(int newValue)
+{
+    emit computationProgress(newValue);
+    emit repaintProgressBar();
+    qApp->processEvents();
+}
 
 KMCGUI::KMCGUI(QWidget *parent)
     : QMainWindow(parent)
@@ -16,10 +31,8 @@ KMCGUI::KMCGUI(QWidget *parent)
     ui.setupUi(this);
     configureSliders(ui);
     configureCheckboxes(ui);
-    ui.progressValue->setText("0 %");
+    ui.progressBarValue->setValue(0);
 
-    //connect(ui.chooseButton, SIGNAL(clicked()), this, SLOT(on_chooseButton_clicked()));
-    //connect(ui.runButton, SIGNAL(clicked()), this, SLOT(on_runButton_clicked()));
     connect(ui.kmerLengthSlider, SIGNAL(ui.horizontalSlider->valueChanged()), this,
         SLOT(on_horizontalSlider_valueChanged()()));
     connect(ui.threadsSlider, SIGNAL(ui.threadsSlider->valueChanged()), this,
@@ -82,7 +95,11 @@ void KMCGUI::on_chooseButton_clicked()
 
 void KMCGUI::on_runButton_clicked()
 {
-    ProgressObserver* progressObserver = new ProgressObserver(&ui);
+    ui.progressBarValue->setValue(0);
+
+    connect(this, SIGNAL(repaintProgressBar()), ui.progressBarValue, SLOT(repaint()), Qt::QueuedConnection);
+    connect(this, SIGNAL(computationProgress(int)), ui.progressBarValue, SLOT(setValue(int)), Qt::QueuedConnection);
+
 
     ui.errorMessageBox->setText("");
     ui.totalKmersValue->setText("Wait for result...");
@@ -103,6 +120,14 @@ void KMCGUI::on_runButton_clicked()
         }
         try
         {
+            QString outputFileNameQString = ui.outputFileName->toPlainText();
+            std::string outputFileName = outputFileNameQString.toStdString();
+
+            if (outputFileName.c_str() == "")
+            {
+                outputFileName = "31mers";
+            }
+
             stage1Params
                 .SetKmerLen(ui.kmerLengthSlider->value())
                 .SetNThreads(ui.threadsSlider->value())
@@ -113,9 +138,15 @@ void KMCGUI::on_runButton_clicked()
                 .SetRamOnlyMode(ui.ramModeCheckBox->isChecked())
                 .SetNBins(ui.nBinsSlider->value())
                 .SetInputFiles(stringFileNames)
-                .SetPercentProgressObserver(progressObserver);
+                .SetPercentProgressObserver(this);
+            
+            ui.progressBarValue->repaint();
+            qApp->processEvents();
 
-            auto stage1Result = runner.RunStage1(stage1Params);
+            KMC::Stage1Results stage1Result = runner.RunStage1(stage1Params);
+            
+            ui.progressBarValue->repaint();
+            qApp->processEvents();
 
             KMC::Stage2Params stage2Params;
 
@@ -125,7 +156,7 @@ void KMCGUI::on_runButton_clicked()
                 .SetOutputFileName("31mers");
 
             auto stage2Result = runner.RunStage2(stage2Params);
-        
+       
 
             std::string totalKmers = std::to_string(stage2Result.nTotalKmers);
             std::string uniqueKmers = std::to_string(stage2Result.nUniqueKmers);

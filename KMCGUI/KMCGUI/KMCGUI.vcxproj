@@ -102,7 +102,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ProgressObserver.cpp" />
     <QtRcc Include="KMCGUI.qrc" />
     <QtUic Include="KMCGUI.ui" />
     <QtMoc Include="KMCGUI.h" />
@@ -112,7 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configuration.h" />
-    <ClInclude Include="ProgressObserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

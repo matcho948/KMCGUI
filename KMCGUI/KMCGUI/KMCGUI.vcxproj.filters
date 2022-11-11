@@ -52,16 +52,10 @@
     <ClCompile Include="configuration.cpp">
       <Filter>Configuration</Filter>
     </ClCompile>
-    <ClCompile Include="ProgressObserver.cpp">
-      <Filter>ProgressObserver</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configuration.h">
       <Filter>Configuration</Filter>
-    </ClInclude>
-    <ClInclude Include="ProgressObserver.h">
-      <Filter>ProgressObserver</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
