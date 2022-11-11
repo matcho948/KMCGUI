@@ -123,10 +123,8 @@ void KMCGUI::on_runButton_clicked()
             QString outputFileNameQString = ui.outputFileName->toPlainText();
             std::string outputFileName = outputFileNameQString.toStdString();
 
-            if (outputFileName.c_str() == "")
-            {
-                outputFileName = "31mers";
-            }
+            auto fileName = ui.outputFileName->toPlainText();
+            outputFileName = fileName.toLocal8Bit().constData();
 
             stage1Params
                 .SetKmerLen(ui.kmerLengthSlider->value())
@@ -150,10 +148,20 @@ void KMCGUI::on_runButton_clicked()
 
             KMC::Stage2Params stage2Params;
 
-            stage2Params
-                .SetNThreads(ui.threadsSliderStage2->value())
-                .SetMaxRamGB(ui.GBSliderStage2->value())
-                .SetOutputFileName("31mers");
+            if (outputFileName == "")
+            {
+                stage2Params
+                    .SetNThreads(ui.threadsSliderStage2->value())
+                    .SetMaxRamGB(ui.GBSliderStage2->value())
+                    .SetOutputFileName("31mers");
+            }
+            else
+            {
+                stage2Params
+                    .SetNThreads(ui.threadsSliderStage2->value())
+                    .SetMaxRamGB(ui.GBSliderStage2->value())
+                    .SetOutputFileName(outputFileName);
+            }
 
             auto stage2Result = runner.RunStage2(stage2Params);
        

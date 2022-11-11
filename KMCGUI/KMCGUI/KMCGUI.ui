@@ -1005,7 +1005,7 @@ border-radius: 20px;</string>
    <widget class="QLabel" name="progressBarHeader">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>590</x>
       <y>250</y>
       <width>181</width>
       <height>31</height>
@@ -1054,7 +1054,7 @@ border-radius: 20px;</string>
    <widget class="QProgressBar" name="progressBarValue">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>600</x>
       <y>290</y>
       <width>181</width>
       <height>23</height>
