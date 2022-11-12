@@ -27,6 +27,9 @@
     <Filter Include="Actions">
       <UniqueIdentifier>{c991775f-030b-482e-ac4f-b08e66870ed9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProgressObserver">
+      <UniqueIdentifier>{e5bf8326-ee1d-4dfe-a29c-859020ea9a99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="KMCGUI.qrc">

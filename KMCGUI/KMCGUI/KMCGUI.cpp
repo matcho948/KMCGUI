@@ -4,6 +4,19 @@
 #include <iostream>
 #include <algorithm>
 #include "configuration.h"
+#include <chrono>
+#include <thread>
+#include <mutex>
+#include <QFutureWatcher>
+#include <windows.h>
+#include <QtConcurrent/QtConcurrent>
+#include <iterator>
+#include <algorithm>
+#include <fstream>
+
+
+KMC::Runner runner;
+KMC::Stage1Params stage1Params;
 
 KMCGUI::KMCGUI(QWidget *parent)
     : QMainWindow(parent)
@@ -11,9 +24,8 @@ KMCGUI::KMCGUI(QWidget *parent)
     ui.setupUi(this);
     configureSliders(ui);
     configureCheckboxes(ui);
+    ui.progressBarValue->setValue(0);
 
-    connect(ui.chooseButton, SIGNAL(clicked()), this, SLOT(on_chooseButton_clicked()));
-    connect(ui.runButton, SIGNAL(clicked()), this, SLOT(on_runButton_clicked()));
     connect(ui.kmerLengthSlider, SIGNAL(ui.horizontalSlider->valueChanged()), this,
         SLOT(on_horizontalSlider_valueChanged()()));
     connect(ui.threadsSlider, SIGNAL(ui.threadsSlider->valueChanged()), this,
@@ -28,6 +40,19 @@ KMCGUI::KMCGUI(QWidget *parent)
 
 KMCGUI::~KMCGUI()
 {}
+
+
+void KMCGUI::SetLabel(const std::string& label)
+{
+    this->label = label;
+}
+
+void KMCGUI::ProgressChanged(int newValue)
+{
+    emit computationProgress(newValue);
+    emit repaintProgressBar();
+    qApp->processEvents();
+}
 
 void KMCGUI::on_kmerLengthSlider_valueChanged()
 {
@@ -70,11 +95,18 @@ void KMCGUI::on_chooseButton_clicked()
     QFileDialog* fileDialog = new QFileDialog();
     fileNames = fileDialog->getOpenFileNames(this, tr("Open Files"),
         "",
-        tr("Fasta files (*.fq *.fastq)"));
+        tr("Fastq file (*.fastq);;Fq file (*.fq);;Fasta file (*.fasta);;Fa file (*.fa);;Compressed Fastq file (*.fastq.gz);;Compressed Fq file (*.fq.gz);;Compressed Fasta file (*.fasta.gz);;Compressed fa file (*.fa.gz);;Fm file (*.fm);;Compressed fm file (*.fm.gz)"));
+    ui.choosenFileLabel->setText(fileNames[0]);
 }
 
 void KMCGUI::on_runButton_clicked()
 {
+    ui.progressBarValue->setValue(0);
+
+    connect(this, SIGNAL(repaintProgressBar()), ui.progressBarValue, SLOT(repaint()), Qt::QueuedConnection);
+    connect(this, SIGNAL(computationProgress(int)), ui.progressBarValue, SLOT(setValue(int)), Qt::QueuedConnection);
+
+
     ui.errorMessageBox->setText("");
     ui.totalKmersValue->setText("Wait for result...");
     ui.totalUniqueKmersValue->setText("Wait for result...");
@@ -94,9 +126,12 @@ void KMCGUI::on_runButton_clicked()
         }
         try
         {
-            KMC::Runner runner;
+            QString outputFileNameQString = ui.outputFileName->toPlainText();
+            std::string outputFileName = outputFileNameQString.toStdString();
 
-            KMC::Stage1Params stage1Params;
+            auto fileName = ui.outputFileName->toPlainText();
+            outputFileName = fileName.toLocal8Bit().constData();
+
             stage1Params
                 .SetKmerLen(ui.kmerLengthSlider->value())
                 .SetNThreads(ui.threadsSlider->value())
@@ -106,19 +141,40 @@ void KMCGUI::on_runButton_clicked()
                 .SetCanonicalKmers(ui.canoncialKmersCheckBox->isChecked())
                 .SetRamOnlyMode(ui.ramModeCheckBox->isChecked())
                 .SetNBins(ui.nBinsSlider->value())
-                .SetInputFiles(stringFileNames);
+                .SetInputFiles(stringFileNames)
+                .SetPercentProgressObserver(this);
+            
+            ui.progressBarValue->repaint();
+            qApp->processEvents();
 
-            auto stage1Result = runner.RunStage1(stage1Params);
+            KMC::Stage1Results stage1Result = runner.RunStage1(stage1Params);
+            
+            ui.progressBarValue->repaint();
+            qApp->processEvents();
 
             KMC::Stage2Params stage2Params;
 
-            stage2Params
-                .SetNThreads(ui.threadsSliderStage2->value())
-                .SetMaxRamGB(ui.GBSliderStage2->value())
-                .SetOutputFileName("31mers");
+            if (outputFileName == "")
+            {
+                stage2Params
+                    .SetNThreads(ui.threadsSliderStage2->value())
+                    .SetMaxRamGB(ui.GBSliderStage2->value())
+                    .SetOutputFileName("31mers");
 
+                lastOutputFileName = "31mers";
+            }
+            else
+            {
+                stage2Params
+                    .SetNThreads(ui.threadsSliderStage2->value())
+                    .SetMaxRamGB(ui.GBSliderStage2->value())
+                    .SetOutputFileName(outputFileName);
+
+                lastOutputFileName = outputFileName;
+            }
+
+           
             auto stage2Result = runner.RunStage2(stage2Params);
-        
 
             std::string totalKmers = std::to_string(stage2Result.nTotalKmers);
             std::string uniqueKmers = std::to_string(stage2Result.nUniqueKmers);
@@ -133,3 +189,16 @@ void KMCGUI::on_runButton_clicked()
         }
     }
 }
+
+void KMCGUI::on_checkDatabaseButton_clicked()
+{
+    std::string st = "./kmc_tools transform " + lastOutputFileName + " dump " + lastOutputFileName +
+        ".txt";
+
+    WinExec(st.c_str(), 1);
+
+    std::ifstream aFile(lastOutputFileName + ".txt");
+    int lines_count = std::count(std::istreambuf_iterator<char>(aFile),
+        std::istreambuf_iterator<char>(), '\n');
+}
+
