@@ -8,22 +8,15 @@
 #include <thread>
 #include <mutex>
 #include <QFutureWatcher>
+#include <windows.h>
 #include <QtConcurrent/QtConcurrent>
+#include <iterator>
+#include <algorithm>
+#include <fstream>
+
 
 KMC::Runner runner;
 KMC::Stage1Params stage1Params;
-
-void KMCGUI::SetLabel(const std::string& label)
-{
-    this->label = label;
-}
-
-void KMCGUI::ProgressChanged(int newValue)
-{
-    emit computationProgress(newValue);
-    emit repaintProgressBar();
-    qApp->processEvents();
-}
 
 KMCGUI::KMCGUI(QWidget *parent)
     : QMainWindow(parent)
@@ -47,6 +40,19 @@ KMCGUI::KMCGUI(QWidget *parent)
 
 KMCGUI::~KMCGUI()
 {}
+
+
+void KMCGUI::SetLabel(const std::string& label)
+{
+    this->label = label;
+}
+
+void KMCGUI::ProgressChanged(int newValue)
+{
+    emit computationProgress(newValue);
+    emit repaintProgressBar();
+    qApp->processEvents();
+}
 
 void KMCGUI::on_kmerLengthSlider_valueChanged()
 {
@@ -154,6 +160,8 @@ void KMCGUI::on_runButton_clicked()
                     .SetNThreads(ui.threadsSliderStage2->value())
                     .SetMaxRamGB(ui.GBSliderStage2->value())
                     .SetOutputFileName("31mers");
+
+                lastOutputFileName = "31mers";
             }
             else
             {
@@ -161,10 +169,12 @@ void KMCGUI::on_runButton_clicked()
                     .SetNThreads(ui.threadsSliderStage2->value())
                     .SetMaxRamGB(ui.GBSliderStage2->value())
                     .SetOutputFileName(outputFileName);
+
+                lastOutputFileName = outputFileName;
             }
 
+           
             auto stage2Result = runner.RunStage2(stage2Params);
-       
 
             std::string totalKmers = std::to_string(stage2Result.nTotalKmers);
             std::string uniqueKmers = std::to_string(stage2Result.nUniqueKmers);
@@ -179,3 +189,16 @@ void KMCGUI::on_runButton_clicked()
         }
     }
 }
+
+void KMCGUI::on_checkDatabaseButton_clicked()
+{
+    std::string st = "./kmc_tools transform " + lastOutputFileName + " dump " + lastOutputFileName +
+        ".txt";
+
+    WinExec(st.c_str(), 1);
+
+    std::ifstream aFile(lastOutputFileName + ".txt");
+    int lines_count = std::count(std::istreambuf_iterator<char>(aFile),
+        std::istreambuf_iterator<char>(), '\n');
+}
+

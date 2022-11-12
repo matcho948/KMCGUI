@@ -24,11 +24,13 @@ public slots:
     void on_nBinsSlider_valueChanged();
     void on_threadsSliderStage2_valueChanged();
     void on_GBSliderStage2_valueChanged();
+    void on_checkDatabaseButton_clicked();
 signals:
     void computationProgress(int progress);
     void repaintProgressBar();
 private:	
     std::string label;
+    std::string lastOutputFileName;
     Ui::KMCGUIClass ui;
     QStringList fileNames; 
 };
