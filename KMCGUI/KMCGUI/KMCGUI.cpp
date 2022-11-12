@@ -200,5 +200,8 @@ void KMCGUI::on_checkDatabaseButton_clicked()
     std::ifstream aFile(lastOutputFileName + ".txt");
     int lines_count = std::count(std::istreambuf_iterator<char>(aFile),
         std::istreambuf_iterator<char>(), '\n');
+
+    QWidget* wdg = new QWidget;
+    wdg->show();
 }
 
