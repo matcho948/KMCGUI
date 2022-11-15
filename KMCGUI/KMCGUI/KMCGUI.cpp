@@ -13,6 +13,7 @@
 #include <iterator>
 #include <algorithm>
 #include <fstream>
+#include "DataTable.h"
 
 
 KMC::Runner runner;
@@ -201,7 +202,7 @@ void KMCGUI::on_checkDatabaseButton_clicked()
     int lines_count = std::count(std::istreambuf_iterator<char>(aFile),
         std::istreambuf_iterator<char>(), '\n');
 
-    QWidget* wdg = new QWidget;
-    wdg->show();
+    DataTable d;
+    d.show();
 }
 

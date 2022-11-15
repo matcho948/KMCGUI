@@ -103,14 +103,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="KMCGUI.qrc" />
+    <QtUic Include="DataTable.ui" />
     <QtUic Include="KMCGUI.ui" />
     <QtMoc Include="KMCGUI.h" />
     <ClCompile Include="configuration.cpp" />
+    <ClCompile Include="DataTable.cpp" />
     <ClCompile Include="KMCGUI.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configuration.h" />
+    <QtMoc Include="DataTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
