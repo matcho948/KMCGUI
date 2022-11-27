@@ -97,7 +97,10 @@ void KMCGUI::on_chooseButton_clicked()
     fileNames = fileDialog->getOpenFileNames(this, tr("Open Files"),
         "",
         tr("Fastq file (*.fastq);;Fq file (*.fq);;Fasta file (*.fasta);;Fa file (*.fa);;Compressed Fastq file (*.fastq.gz);;Compressed Fq file (*.fq.gz);;Compressed Fasta file (*.fasta.gz);;Compressed fa file (*.fa.gz);;Fm file (*.fm);;Compressed fm file (*.fm.gz)"));
-    ui.choosenFileLabel->setText(fileNames[0]);
+    if(fileNames.count() > 0)
+    {
+        ui.choosenFileLabel->setText(fileNames[0]);
+    }
 }
 
 void KMCGUI::on_runButton_clicked()
