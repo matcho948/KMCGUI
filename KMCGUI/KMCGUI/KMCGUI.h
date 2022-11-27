@@ -3,7 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_KMCGUI.h"
 #include <kmc_runner.h>
-
+#include "DataTable.h"
 
 class KMCGUI : public QMainWindow, public KMC::IPercentProgressObserver
 {
@@ -33,4 +33,5 @@ private:
     std::string lastOutputFileName;
     Ui::KMCGUIClass ui;
     QStringList fileNames; 
+    DataTable* dataTable;
 };

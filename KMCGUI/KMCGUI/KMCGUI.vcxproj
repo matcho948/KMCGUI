@@ -108,11 +108,13 @@
     <QtMoc Include="KMCGUI.h" />
     <ClCompile Include="configuration.cpp" />
     <ClCompile Include="DataTable.cpp" />
+    <ClCompile Include="DataTableModel.cpp" />
     <ClCompile Include="KMCGUI.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configuration.h" />
+    <ClInclude Include="DataTableModel.h" />
     <QtMoc Include="DataTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

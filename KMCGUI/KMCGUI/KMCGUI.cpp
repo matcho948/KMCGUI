@@ -180,6 +180,11 @@ void KMCGUI::on_runButton_clicked()
             std::string totalKmers = std::to_string(stage2Result.nTotalKmers);
             std::string uniqueKmers = std::to_string(stage2Result.nUniqueKmers);
 
+            std::string st = "./kmc_tools transform " + lastOutputFileName + " dump "
+                + lastOutputFileName + ".txt";
+
+            WinExec(st.c_str(), 1);
+
             ui.totalKmersValue->setText(QString::fromUtf8(totalKmers.c_str()));
             ui.totalUniqueKmersValue->setText(QString::fromUtf8(uniqueKmers.c_str()));
             
@@ -193,16 +198,10 @@ void KMCGUI::on_runButton_clicked()
 
 void KMCGUI::on_checkDatabaseButton_clicked()
 {
-    std::string st = "./kmc_tools transform " + lastOutputFileName + " dump " + lastOutputFileName +
-        ".txt";
-
-    WinExec(st.c_str(), 1);
-
-    std::ifstream aFile(lastOutputFileName + ".txt");
-    int lines_count = std::count(std::istreambuf_iterator<char>(aFile),
-        std::istreambuf_iterator<char>(), '\n');
-
-    DataTable d;
-    d.show();
+    dataTable = new DataTable(this);
+    dataTable->resultFileName = lastOutputFileName;
+    //dataTable = new DataTable();
+    dataTable->show();
+    dataTable->showDataTable();
 }
 
