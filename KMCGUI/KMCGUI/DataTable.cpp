@@ -42,38 +42,79 @@ void DataTable::showDataTable()
 
     int iterator = 0;
     std::vector<DataTableModel> data;
-    while ( secondFile.eof() || iterator < 10)
-    {
-        std::string kmer;
-        std::string occurences;
-        secondFile >> kmer >> occurences;
-        DataTableModel dataTableModel(kmer, occurences);
-        data.push_back(dataTableModel);
-        
-        iterator++;
-    }
-    QStandardItemModel* model = new QStandardItemModel(1, 2, this);
-    QStringList headers;
-    headers.append("Kmer");
-    headers.append("Occurencces");
 
-    model->setColumnCount(2);
-    model->setHorizontalHeaderLabels(headers);
-    
-    for (int row = 0; row < 10; row++)
+
+    if (currentPage == totalPages)
     {
-        if (row < data.size())
+        std::ifstream aFile;
+
+        int newIterator = lines_count % 10 == 0 ? 10 : lines_count % 10;
+        while (secondFile.eof() || iterator < newIterator)
         {
-
-            DataTableModel dataModel = data[row];
-
-            model->setItem(row, 0, new QStandardItem(QString::fromUtf8(dataModel.kmer.c_str())));
-            model->setItem(row, 1, new QStandardItem(QString::fromUtf8(dataModel.occurences.c_str())));
+            std::string kmer;
+            std::string occurences;
+            secondFile >> kmer >> occurences;
+            DataTableModel dataTableModel(kmer, occurences);
+            data.push_back(dataTableModel);
+            iterator++;
         }
-    }
+        QStandardItemModel* model = new QStandardItemModel(1, 2, this);
+        QStringList headers;
+        headers.append("Kmer");
+        headers.append("Occurencces");
 
-    ui.dataTable->setModel(model);
+        model->setColumnCount(2);
+        model->setHorizontalHeaderLabels(headers);
+
+        for (int row = 0; row < 10; row++)
+        {
+            if (row < data.size())
+            {
+
+                DataTableModel dataModel = data[row];
+
+                model->setItem(row, 0, new QStandardItem(QString::fromUtf8(dataModel.kmer.c_str())));
+                model->setItem(row, 1, new QStandardItem(QString::fromUtf8(dataModel.occurences.c_str())));
+            }
+        }
+        ui.dataTable->setModel(model);
+    }
+    else
+    {
+        while (secondFile.eof() || iterator < 10)
+        {
+            std::string kmer;
+            std::string occurences;
+            secondFile >> kmer >> occurences;
+            DataTableModel dataTableModel(kmer, occurences);
+            data.push_back(dataTableModel);
+
+            iterator++;
+        }
+        QStandardItemModel* model = new QStandardItemModel(1, 2, this);
+        QStringList headers;
+        headers.append("Kmer");
+        headers.append("Occurencces");
+
+        model->setColumnCount(2);
+        model->setHorizontalHeaderLabels(headers);
+
+        for (int row = 0; row < 10; row++)
+        {
+            if (row < data.size())
+            {
+
+                DataTableModel dataModel = data[row];
+
+                model->setItem(row, 0, new QStandardItem(QString::fromUtf8(dataModel.kmer.c_str())));
+                model->setItem(row, 1, new QStandardItem(QString::fromUtf8(dataModel.occurences.c_str())));
+            }
+        }
+
+        ui.dataTable->setModel(model);
+    }
     aFile.close();
+
 }
 
 void DataTable::on_previousPageButton_clicked()
