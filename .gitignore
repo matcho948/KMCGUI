@@ -353,3 +353,4 @@ MigrationBackup/
 
 *.kmc_pre
 *.kmc_suf
+*.txt
