@@ -379,8 +379,12 @@ bool CKMCFile::CheckKmer(CKmerAPI& kmer, uint64& count)
 		return false;
 
 	//recognize a prefix:
-	uint64 pattern_prefix_value = kmer.kmer_data[0];
+	if (kmer.kmer_length == 0)
+	{
+		throw std::invalid_argument("No kmer like this");
+	}
 
+	uint64 pattern_prefix_value = kmer.kmer_data[0];
 	uint32 pattern_offset = (sizeof(pattern_prefix_value) * 8) - (lut_prefix_length * 2) - (kmer.byte_alignment * 2);
 	int64 index_start = 0, index_stop = 0;
 
