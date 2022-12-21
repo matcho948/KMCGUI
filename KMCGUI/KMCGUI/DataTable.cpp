@@ -167,16 +167,6 @@ void DataTable::on_previousPageButton_clicked()
 
 void DataTable::on_nextPageButton_clicked()
 {
-	CKMCFile kmer_data_base;
-	CKmerAPI kmer;
-	CKmerAPI newKmer = kmer.from_string("GTCCGCGAA");
-	uint64 kmercounter;
-
-	if (!kmer_data_base.OpenForRA("31mers"))
-	{
-		kmer_data_base.CheckKmer(newKmer, kmercounter);
-	}
-
 	if (currentPage < totalPages)
 	{
 		currentPage++;
@@ -273,6 +263,36 @@ void DataTable::on_nextPageButton_clicked()
 	}
 }
 
+void DataTable::on_searchButton_clicked()
+{
+	try
+	{
+		CKMCFile kmer_data_base;
+		CKmerAPI kmer;
+		QString qstring = ui.kmerSearchValue->text();
+		std::string stringKmer = qstring.toLocal8Bit().constData();
+		kmer.from_string(stringKmer);
+		uint64 kmercounter;
+
+		if (kmer_data_base.OpenForRA(resultFileName))
+		{
+			ui.kmerValue->setText(ui.kmerSearchValue->text());
+			if (kmer_data_base.CheckKmer(kmer, kmercounter))
+			{
+				ui.kmerOccurences->setText(QString::number(kmercounter));
+			}
+			else
+			{
+				ui.kmerOccurences->setText(QString::number(0));
+			}
+		}
+	}
+	catch (...)
+	{
+		ui.kmerOccurences->setText(QString::number(0));
+	}
+}
+
 void DataTable::on_goButton_clicked()
 {
 	QString qPage = ui.goPage->text();
@@ -280,7 +300,7 @@ void DataTable::on_goButton_clicked()
 	int tmpCurrentPage = currentPage;
 	currentPage = page;
 
-	if (currentPage < totalPages && currentPage > 1)
+	if (currentPage <= totalPages && currentPage >= 1)
 	{
 		ui.currentPage->setText(QString::number(currentPage));
 
@@ -375,6 +395,7 @@ void DataTable::on_goButton_clicked()
 	}
 	else
 	{
+		ui.errorPageLabel->setText("Page out of range");
 		currentPage = tmpCurrentPage;
 	}
 }

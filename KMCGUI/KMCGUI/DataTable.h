@@ -19,7 +19,10 @@ public slots:
 	void on_previousPageButton_clicked();
 	void on_nextPageButton_clicked();
 	void on_goButton_clicked();
+	void on_searchButton_clicked();
 private:
+	void showFirstOrLastPage();
+	void showPage();
 	int currentPage;
 	int totalPages;
 };
