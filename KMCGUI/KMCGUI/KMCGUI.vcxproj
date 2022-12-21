@@ -73,6 +73,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\kmc lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kmc_core.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -102,6 +103,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="kmc_file.cpp" />
+    <ClCompile Include="kmer_api.cpp" />
+    <ClCompile Include="mmer.cpp" />
+    <ClCompile Include="nc_utils.cpp" />
     <QtRcc Include="KMCGUI.qrc" />
     <QtUic Include="DataTable.ui" />
     <QtUic Include="KMCGUI.ui" />
@@ -115,6 +120,11 @@
   <ItemGroup>
     <ClInclude Include="configuration.h" />
     <ClInclude Include="DataTableModel.h" />
+    <ClInclude Include="kmc_file.h" />
+    <ClInclude Include="kmer_api.h" />
+    <ClInclude Include="kmer_defs.h" />
+    <ClInclude Include="mmer.h" />
+    <ClInclude Include="nc_utils.h" />
     <QtMoc Include="DataTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

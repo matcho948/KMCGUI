@@ -30,6 +30,9 @@
     <Filter Include="ProgressObserver">
       <UniqueIdentifier>{e5bf8326-ee1d-4dfe-a29c-859020ea9a99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KMC files">
+      <UniqueIdentifier>{3784a324-9127-4f33-8f75-a950cad48695}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="KMCGUI.qrc">
@@ -58,6 +61,18 @@
     <ClCompile Include="DataTableModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nc_utils.cpp">
+      <Filter>KMC files</Filter>
+    </ClCompile>
+    <ClCompile Include="kmc_file.cpp">
+      <Filter>KMC files</Filter>
+    </ClCompile>
+    <ClCompile Include="mmer.cpp">
+      <Filter>KMC files</Filter>
+    </ClCompile>
+    <ClCompile Include="kmer_api.cpp">
+      <Filter>KMC files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configuration.h">
@@ -65,6 +80,21 @@
     </ClInclude>
     <ClInclude Include="DataTableModel.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nc_utils.h">
+      <Filter>KMC files</Filter>
+    </ClInclude>
+    <ClInclude Include="kmer_defs.h">
+      <Filter>KMC files</Filter>
+    </ClInclude>
+    <ClInclude Include="kmc_file.h">
+      <Filter>KMC files</Filter>
+    </ClInclude>
+    <ClInclude Include="mmer.h">
+      <Filter>KMC files</Filter>
+    </ClInclude>
+    <ClInclude Include="kmer_api.h">
+      <Filter>KMC files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,7 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DataTable.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

@@ -1308,7 +1308,7 @@ cursor: pointer;</string>
    <widget class="QLabel" name="choosenFileLabel">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>550</x>
       <y>360</y>
       <width>441</width>
       <height>31</height>
