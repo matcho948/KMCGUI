@@ -178,9 +178,9 @@ void KMCGUI::on_runButton_clicked()
 					.SetCutoffMin(ui.cutoffMinSliderStage2->value())
 					.SetCutoffMax(ui.cutoffMaxSliderStage2->value())
 					.SetCounterMax(ui.counterMaxSliderStage2->value())
-					.SetOutputFileName("31mers");
+					.SetOutputFileName("mers");
 
-				lastOutputFileName = "31mers";
+				lastOutputFileName = "mers";
 			}
 			else
 			{
