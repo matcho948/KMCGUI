@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataTableModel" Collapsed="true">
+    <Position X="10.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAIAIAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataTableModel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KMCGUI">
+    <Position X="10" Y="4" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAARIQABAEAMBAAhAAAAEAIgCAFAAAAgFAAIAAABAA=</HashCode>
+      <FileName>KMCGUI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataTable" Collapsed="true">
+    <Position X="11.5" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAEAAAAACAAEAkCAAAAAAAAAAAAAAAAAAgAAgEAAAI=</HashCode>
+      <FileName>DataTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CKMCFile">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="CKMCFile::CPrefixFileBufferForListingMode" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>kmc_file.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Enum Name="CKMCFile::open_mode" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>kmc_file.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BAgARhEKAJAwFADCAkAKEDAEL4INIgBHggRDSEKAcBA=</HashCode>
+      <FileName>kmc_file.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CKmerAPI">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="CKmerAPI::_si" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>kmer_api.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IEBIQAACgAAAFEAAIAhIAQCoAAACAEJQICAgAAAAAQA=</HashCode>
+      <FileName>kmer_api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMmer">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="CMmer::_si" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>mmer.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AUAAAAAAAABAAIAAIAyAQSAgAAACACAAAAAggIAAgAE=</HashCode>
+      <FileName>mmer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CNumericConversions">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="CNumericConversions::_si" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>nc_utils.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAgAAAAAAAABAAAAABAAAUAAAAA=</HashCode>
+      <FileName>nc_utils.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="CKMCFileInfo">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAACAAgAAABAAAgAAAABGAAAAAAAAIAA=</HashCode>
+      <FileName>kmc_file.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="uchar" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>kmer_defs.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

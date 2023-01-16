@@ -28,12 +28,13 @@ DataTable::~DataTable()
 
 void DataTable::showDataTable()
 {
+	int kmers_per_page = 10;
 	std::ifstream aFile;
 	aFile.open(resultFileName + ".txt");
 	int lines_count = std::count(std::istreambuf_iterator<char>(aFile),
 		std::istreambuf_iterator<char>(), '\n');
 
-	totalPages = lines_count % 10 == 0 ? lines_count / 10 : (lines_count / 10 + 1);
+	totalPages = (lines_count + (kmers_per_page - 1)) / kmers_per_page;
 
 	ui.totalPages->setText(QString::number(totalPages));
 	aFile.close();
@@ -133,10 +134,10 @@ void DataTable::on_nextPageButton_clicked()
 
 void DataTable::on_searchButton_clicked()
 {
+	CKMCFile kmer_data_base;
+	CKmerAPI kmer;
 	try
 	{
-		CKMCFile kmer_data_base;
-		CKmerAPI kmer;
 		QString qstring = ui.kmerSearchValue->text();
 		std::string stringKmer = qstring.toLocal8Bit().constData();
 		kmer.from_string(stringKmer);
@@ -153,6 +154,10 @@ void DataTable::on_searchButton_clicked()
 			{
 				ui.kmerOccurences->setText(QString::number(0));
 			}
+		}
+		else
+		{
+			ui.kmerOccurences->setText("Cannot open database");
 		}
 	}
 	catch (...)
@@ -201,12 +206,13 @@ void DataTable::showFirstOrLastPage()
 
 	if (currentPage == totalPages)
 	{
+		int kmers_per_page = 10;
 		std::ifstream aFile;
 		aFile.open(resultFileName + ".txt");
 		int lines_count = std::count(std::istreambuf_iterator<char>(aFile),
 			std::istreambuf_iterator<char>(), '\n');
 
-		int newIterator = lines_count % 10 == 0 ? 10 : lines_count % 10;
+		int newIterator = (lines_count + (kmers_per_page - 1)) / kmers_per_page;
 
 		aFile.close();
 
